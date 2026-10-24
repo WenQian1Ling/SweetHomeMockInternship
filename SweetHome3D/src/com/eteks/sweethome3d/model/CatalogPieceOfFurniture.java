@@ -47,6 +47,7 @@ public class CatalogPieceOfFurniture implements Comparable<CatalogPieceOfFurnitu
   private final float             width;
   private final float             depth;
   private final float             height;
+  private final float             volume;
   private final boolean           proportional;
   private final float             elevation;
   private final float             dropOnTopElevation;
@@ -93,9 +94,9 @@ public class CatalogPieceOfFurniture implements Comparable<CatalogPieceOfFurnitu
    *             of {@link CatalogDoorOrWindow} 
    */
   public CatalogPieceOfFurniture(String name, Content icon, Content model, 
-                                 float width, float depth, float height, 
+                                 float width, float depth, float height,
                                  boolean movable, boolean doorOrWindow) {
-    this(null, name, null, icon, model, width, depth, height, 0, movable, doorOrWindow, 
+    this(null, name, null, icon, model, width, depth, height, 0, movable, doorOrWindow,
         INDENTITY_ROTATION, null, true, null, null);
   }
 
@@ -507,6 +508,7 @@ public class CatalogPieceOfFurniture implements Comparable<CatalogPieceOfFurnitu
     this.model = model;
     this.width = width;
     this.depth = depth;
+    this.volume = width * depth * height;
     this.height = height;
     this.elevation = elevation;
     this.dropOnTopElevation = dropOnTopElevation;
@@ -606,6 +608,10 @@ public class CatalogPieceOfFurniture implements Comparable<CatalogPieceOfFurnitu
    */
   public float getWidth() {
     return this.width;
+  }
+
+  public float getVolume() {
+    return this.volume;
   }
 
   /**
