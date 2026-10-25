@@ -778,7 +778,35 @@ public class FurnitureTable extends JTable implements View, Printable {
       // Change printable column header renderer
       printableColumn.setHeaderRenderer(printableHeaderRenderer);
       printableColumnModel.addColumn(printableColumn);
-    }    
+    }
+
+    TableColumn levelColumn = new TableColumn();
+    levelColumn.setIdentifier(HomePieceOfFurniture.SortableProperty.LEVEL);
+    levelColumn.setHeaderValue("Level");
+
+    TableCellRenderer printableCellRenderer = new TableCellRenderer() {
+      public Component getTableCellRendererComponent(JTable table, Object value,
+                                                     boolean isSelected, boolean hasFocus, int row, int column) {
+        // Delegate rendering to existing cell renderer
+        TableCellRenderer cellRenderer = ((FurnitureTableColumnModel)columnModel).availableColumns.get(HomePieceOfFurniture.SortableProperty.LEVEL).getCellRenderer();
+        Component rendererComponent = cellRenderer.getTableCellRendererComponent(table, value,
+                isSelected, hasFocus, row, column);
+        if (rendererComponent instanceof JCheckBox) {
+          // Prefer a x sign for boolean values instead of check boxes
+          rendererComponent = defaultRenderer.getTableCellRendererComponent(table,
+                  ((JCheckBox)rendererComponent).isSelected() ? "x" : "", false, false, row, column);
+        }
+        rendererComponent.setBackground(Color.WHITE);
+        rendererComponent.setForeground(Color.BLACK);
+        return rendererComponent;
+      }
+    };
+
+
+    levelColumn.setCellRenderer(printableCellRenderer);
+    levelColumn.setHeaderRenderer(printableHeaderRenderer);
+    printableColumnModel.addColumn(levelColumn);
+
     return print(g, pageFormat, pageIndex, printableColumnModel, Color.BLACK);
   }
 
